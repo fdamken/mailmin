@@ -1,0 +1,6 @@
+keycloak:
+  auth-server-url: https://sso.frisp.org/auth
+  realm: master
+  resource: local-openid-dev
+  public-client: true
+  principal-attribute: username
