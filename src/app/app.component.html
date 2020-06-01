@@ -1,0 +1,21 @@
+<div class="menu-container">
+    <mat-toolbar color="primary" class="menu-toolbar">
+        <button mat-icon-button (click)="snav.toggle()">
+            <mat-icon>menu</mat-icon>
+        </button>
+        <h1 class="menu-app-name">Mailmin</h1>
+    </mat-toolbar>
+
+    <mat-sidenav-container class="menu-sidenav-container" [style.marginTop.px]="0">
+        <mat-sidenav #snav [mode]="'side'" fixedTopGap="56">
+            <mat-nav-list>
+                <mat-list-item routerLink="/ng/dashboard">Dashboard</mat-list-item>
+                <mat-list-item routerLink="/ng/domains">Domains</mat-list-item>
+            </mat-nav-list>
+        </mat-sidenav>
+
+        <mat-sidenav-content class="menu-sidenav-content">
+            <router-outlet></router-outlet>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+</div>
