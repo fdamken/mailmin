@@ -28,8 +28,9 @@ class SecurityConfiguration : KeycloakWebSecurityConfigurerAdapter() {
         super.configure(http)
 
         http.authorizeRequests()
-                .antMatchers("/api/**").authenticated()
-                .anyRequest().permitAll().and()
+                .antMatchers("/*.js", "/*.js.map", "/*.bundle.js", "/favicon.ico").permitAll()
+                .antMatchers("/**").authenticated()
+                .and()
                 .logout().logoutUrl("/logout").addLogoutHandler(keycloakLogoutHandler())
     }
 
