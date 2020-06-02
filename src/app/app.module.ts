@@ -11,6 +11,11 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MatIconModule} from "@angular/material/icon";
 import {DomainsComponent} from "./domains/domains.component";
 import {DashboardComponent} from "./dashboard/dashboard.component";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {MatTableModule} from "@angular/material/table";
+import {DomainService} from "./service/domain.service";
+import {HttpClientModule} from "@angular/common/http";
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 @NgModule({
     declarations: [
@@ -25,10 +30,14 @@ import {DashboardComponent} from "./dashboard/dashboard.component";
         MatToolbarModule,
         MatSidenavModule,
         MatListModule,
+        HttpClientModule,
         BrowserAnimationsModule,
-        MatIconModule
+        MatIconModule,
+        MatProgressSpinnerModule,
+        MatTableModule,
+        MatTooltipModule
     ],
-    providers: [],
+    providers: [DomainService],
     bootstrap: [AppComponent]
 })
 export class AppModule {

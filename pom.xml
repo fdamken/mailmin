@@ -11,10 +11,10 @@
     </parent>
 
     <groupId>org.frisp.oss</groupId>
-    <artifactId>mailadmin</artifactId>
+    <artifactId>mailmin</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>MailAdmin</name>
-    <description>Simple mail administration interface for mail setup as configured for FRISP.</description>
+    <name>MailMin</name>
+    <description>Simple mail administration interface (MAIL adMIN) for mail setup as configured for FRISP.</description>
 
     <properties>
         <java.version>11</java.version>
