@@ -4,7 +4,7 @@ import org.frisp.oss.mailmin.model.Alias
 import java.util.*
 
 interface AliasService : BaseService<Alias, UUID> {
-    fun create(owner: String, isAdmin: Boolean, sourceUsername: String, sourceDomain: String, destUsername: String, destDomain: String): Alias
+    fun create(owner: String, admin: Boolean, sourceUsername: String, sourceDomain: String, destUsername: String, destDomain: String): Alias
 
     fun readFiltered(user: String, admin: Boolean): Set<Alias>
 

@@ -6,6 +6,8 @@ import {MatTableDataSource} from "@angular/material/table";
 import {MatSort} from "@angular/material/sort";
 import {Domain} from "../model/domain.model";
 import {DomainService} from "../service/domain.service";
+import {UserService} from "../service/user.service";
+import {User} from "../model/user.model";
 
 @Component({
     selector: 'app-component',
@@ -24,6 +26,8 @@ export class AliasesComponent implements OnInit, AfterViewInit {
 
     displayedColumns = ['owner', 'sourceUsername', 'sourceDomain', 'destinationUsername', 'destinationDomain', 'enabled', 'accepted', 'actions'];
 
+    user: User;
+
     // Without the trailing comma it doesn't work.
     // noinspection JSConsecutiveCommasInArrayLiteral
     newAliasForm: FormGroup = this.formBuilder.group({
@@ -33,11 +37,13 @@ export class AliasesComponent implements OnInit, AfterViewInit {
         destDomain: [, {validators: [Validators.required], updateOn: 'change'}]
     })
 
-    constructor(private formBuilder: FormBuilder, private aliasService: AliasService, private domainService: DomainService) {
+    constructor(private formBuilder: FormBuilder, private aliasService: AliasService, private domainService: DomainService, private userService: UserService) {
     }
 
     ngOnInit() {
         this.fetchData();
+
+        this.userService.currentUser().subscribe(user => this.user = user);
     }
 
     ngAfterViewInit() {

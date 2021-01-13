@@ -15,11 +15,11 @@ class AliasServiceImpl(
         private val domainService: DomainService
 ) : AbstractBaseService<Alias, UUID>(), AliasService {
     @Transactional
-    override fun create(owner: String, isAdmin: Boolean, sourceUsername: String, sourceDomain: String, destUsername: String, destDomain: String): Alias {
+    override fun create(owner: String, admin: Boolean, sourceUsername: String, sourceDomain: String, destUsername: String, destDomain: String): Alias {
         // Check if the source domain exists.
         domainService.readOne(sourceDomain)
 
-        val alias = Alias(UUID.randomUUID(), owner, sourceUsername, sourceDomain, destUsername, destDomain, false, false)
+        val alias = Alias(UUID.randomUUID(), owner, sourceUsername, sourceDomain, destUsername, destDomain, false, admin)
         return aliasRepository.save(alias)
     }
 

@@ -26,6 +26,7 @@ import {AccountsComponent} from "./accounts/accounts.component";
 import {AccountService} from "./service/account.service";
 import {MatSelectModule} from "@angular/material/select";
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import {UserService} from "./service/user.service";
 
 @NgModule({
     declarations: [
@@ -57,7 +58,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
         MatCheckboxModule
     ],
     exports: [MatSortModule],
-    providers: [AccountService, AliasService, DomainService],
+    providers: [AccountService, AliasService, DomainService, UserService],
     bootstrap: [AppComponent]
 })
 export class AppModule {

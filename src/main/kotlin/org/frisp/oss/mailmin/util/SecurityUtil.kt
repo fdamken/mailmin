@@ -12,6 +12,12 @@ object SecurityUtil {
         return account.keycloakSecurityContext.idToken.preferredUsername
     }
 
+    fun getDisplayName(): String {
+        val authToken = SecurityContextHolder.getContext().authentication as KeycloakAuthenticationToken
+        val account = authToken.details as SimpleKeycloakAccount
+        return account.keycloakSecurityContext.idToken.nickName
+    }
+
     fun isAdmin() = hasRole(SecurityContextHolder.getContext().authentication, SecurityConstants.ROLE_ADMIN)
 
     fun hasRole(auth: Authentication, role: String) = auth.authorities.any { authority -> authority.authority.equals(role, ignoreCase = true) }
