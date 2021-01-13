@@ -1,6 +1,7 @@
 import {Component, OnInit} from "@angular/core";
 import {Domain} from "../model/domain.model";
 import {DomainService} from "../service/domain.service";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
     selector: 'app-component',
@@ -13,7 +14,13 @@ export class DomainsComponent implements OnInit {
 
     displayedColumns = ['domain', 'actions'];
 
-    constructor(private domainService: DomainService) {
+    // Without the trailing comma it doesn't work.
+    // noinspection JSConsecutiveCommasInArrayLiteral
+    newDomainForm: FormGroup = this.formBuilder.group({
+        domainName: [, {validators: [Validators.required], updateOn: 'change'}]
+    })
+
+    constructor(private formBuilder: FormBuilder, private domainService: DomainService) {
     }
 
     ngOnInit() {
@@ -22,6 +29,14 @@ export class DomainsComponent implements OnInit {
 
     delete(domain) {
         this.domainService.deleteOne(domain).subscribe(() => this.fetchData());
+    }
+
+    submitNewDomain() {
+        this.domainService.create(this.newDomainForm.get('domainName').value)
+            .subscribe((_) => {
+                this.fetchData();
+                this.newDomainForm.reset();
+            })
     }
 
     private fetchData() {

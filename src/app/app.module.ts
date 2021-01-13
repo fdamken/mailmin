@@ -5,7 +5,7 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {MatButtonModule} from "@angular/material/button";
 import {MatToolbarModule} from "@angular/material/toolbar";
-import {MatSidenavContainer, MatSidenavModule} from "@angular/material/sidenav";
+import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatListModule} from "@angular/material/list";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MatIconModule} from "@angular/material/icon";
@@ -16,6 +16,8 @@ import {MatTableModule} from "@angular/material/table";
 import {DomainService} from "./service/domain.service";
 import {HttpClientModule} from "@angular/common/http";
 import {MatTooltipModule} from "@angular/material/tooltip";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {MatInputModule} from "@angular/material/input";
 
 @NgModule({
     declarations: [
@@ -35,7 +37,10 @@ import {MatTooltipModule} from "@angular/material/tooltip";
         MatIconModule,
         MatProgressSpinnerModule,
         MatTableModule,
-        MatTooltipModule
+        MatTooltipModule,
+        FormsModule,
+        MatInputModule,
+        ReactiveFormsModule
     ],
     providers: [DomainService],
     bootstrap: [AppComponent]

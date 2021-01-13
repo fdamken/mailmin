@@ -1,6 +1,7 @@
 package org.frisp.oss.mailmin.resource
 
 import org.frisp.oss.mailmin.dto.DomainDTO
+import org.frisp.oss.mailmin.dto.DomainModifyDTO
 import org.frisp.oss.mailmin.mapper.DomainMapper
 import org.frisp.oss.mailmin.service.DomainService
 import org.frisp.oss.mailmin.util.SecurityConstants
@@ -15,6 +16,13 @@ class DomainResource(
         private val domainService: DomainService,
         private val domainMapper: DomainMapper
 ) {
+    @PreAuthorize(SecurityConstants.CHECK_ROLE_ADMIN)
+    @PutMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    fun create(@RequestBody body: DomainModifyDTO): DomainDTO {
+        return domainMapper.toDTO(domainService.create(body.domain.trim().toLowerCase()))
+    }
+
     @GetMapping
     fun readAll(): Set<DomainDTO> {
         return domainService.readAll().map(domainMapper::toDTO).toSet()
