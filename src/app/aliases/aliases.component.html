@@ -1,0 +1,66 @@
+<mat-toolbar>
+    <h2>Aliases</h2>
+</mat-toolbar>
+
+<div class="nav-content">
+    <mat-spinner *ngIf="!isLoaded" [mode]="'indeterminate'"></mat-spinner>
+
+    <p *ngIf="isLoaded && dataSource.data.length <= 0">No aliases found.</p>
+
+    <div [hidden]="!(isLoaded && dataSource.data.length > 0)">
+        <mat-table [dataSource]="dataSource" class="mat-elevation-z5" matSort>
+            <ng-container matColumnDef="id">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>ID</mat-header-cell>
+                <mat-cell *matCellDef="let alias">{{ alias.id }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="owner">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Owner</mat-header-cell>
+                <mat-cell *matCellDef="let alias">{{ alias.owner }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="sourceUsername">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Source Username</mat-header-cell>
+                <mat-cell *matCellDef="let alias">{{ alias.sourceUsername }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="sourceDomain">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Source Domain</mat-header-cell>
+                <mat-cell *matCellDef="let alias">{{ alias.sourceDomain }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="destinationUsername">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Dest. Username</mat-header-cell>
+                <mat-cell *matCellDef="let alias">{{ alias.destinationUsername }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="destinationDomain">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Dest. Domain</mat-header-cell>
+                <mat-cell *matCellDef="let alias">{{ alias.destinationDomain }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="enabled">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Enabled</mat-header-cell>
+                <mat-cell *matCellDef="let alias">
+                    <mat-icon *ngIf="alias.enabled; else aliasNotEnabled">check_circle</mat-icon>
+                    <ng-template #aliasNotEnabled>
+                        <mat-icon>cancel</mat-icon>
+                    </ng-template>
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="accepted">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Accepted</mat-header-cell>
+                <mat-cell *matCellDef="let alias">
+                    <mat-icon *ngIf="alias.accepted; else aliasNotAccepted">check_circle</mat-icon>
+                    <ng-template #aliasNotAccepted>
+                        <mat-icon>cancel</mat-icon>
+                    </ng-template>
+                </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+        </mat-table>
+    </div>
+</div>

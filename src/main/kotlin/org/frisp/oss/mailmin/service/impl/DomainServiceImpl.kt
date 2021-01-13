@@ -10,12 +10,14 @@ import org.springframework.transaction.annotation.Transactional
 class DomainServiceImpl(
         private val domainRepository: DomainRepository
 ) : AbstractBaseService<Domain, String>(), DomainService {
-    override fun getRepository() = domainRepository
-
-    override fun getEntityType() = Domain::class
+    override fun readAll() = getRepository().findByOrderByDomain().toSet()
 
     @Transactional
     override fun create(domain: String): Domain {
         return domainRepository.save(Domain(domain))
     }
+
+    override fun getRepository() = domainRepository
+
+    override fun getEntityType() = Domain::class
 }

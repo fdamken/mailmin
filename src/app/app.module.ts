@@ -18,11 +18,16 @@ import {HttpClientModule} from "@angular/common/http";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
+import {AliasesComponent} from "./aliases/aliases.component";
+import {AliasService} from "./service/alias.service";
+import {MatSortModule} from "@angular/material/sort";
+import {CommonModule} from "@angular/common";
 
 @NgModule({
     declarations: [
         AppComponent,
         DomainsComponent,
+        AliasesComponent,
         DashboardComponent
     ],
     imports: [
@@ -32,6 +37,7 @@ import {MatInputModule} from "@angular/material/input";
         MatToolbarModule,
         MatSidenavModule,
         MatListModule,
+        CommonModule,
         HttpClientModule,
         BrowserAnimationsModule,
         MatIconModule,
@@ -40,9 +46,11 @@ import {MatInputModule} from "@angular/material/input";
         MatTooltipModule,
         FormsModule,
         MatInputModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        MatSortModule
     ],
-    providers: [DomainService],
+    exports: [MatSortModule],
+    providers: [AliasService, DomainService],
     bootstrap: [AppComponent]
 })
 export class AppModule {

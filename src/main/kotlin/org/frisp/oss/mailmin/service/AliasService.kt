@@ -2,4 +2,6 @@ package org.frisp.oss.mailmin.service
 
 import org.frisp.oss.mailmin.model.Alias
 
-interface AliasService : BaseService<Alias, Int>
+interface AliasService : BaseService<Alias, Int> {
+    fun readFiltered(user: String, admin: Boolean): Set<Alias>
+}

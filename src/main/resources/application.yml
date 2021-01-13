@@ -3,4 +3,4 @@ keycloak:
   realm: master
   resource: local-openid-dev
   public-client: true
-  principal-attribute: username
+  principal-attribute: preferred_username
