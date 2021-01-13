@@ -17,6 +17,6 @@ class UserResource(
 ) {
     @GetMapping("/current")
     fun read(): UserDTO {
-        return UserDTO(SecurityUtil.getUserName(), SecurityUtil.getUserName(), SecurityUtil.isAdmin())
+        return UserDTO(SecurityUtil.getUserName(), SecurityUtil.getDisplayName(), SecurityUtil.isAdmin())
     }
 }
