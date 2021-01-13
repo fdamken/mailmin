@@ -28,7 +28,7 @@ export class DomainsComponent implements OnInit {
         this.fetchData();
     }
 
-    delete(domain) {
+    delete(domain: string) {
         this.domainService.deleteOne(domain).subscribe(() => this.fetchData());
     }
 

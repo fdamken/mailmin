@@ -22,7 +22,7 @@ export class AliasesComponent implements OnInit, AfterViewInit {
     @ViewChild(MatSort)
     sort: MatSort;
 
-    displayedColumns = ['owner', 'sourceUsername', 'sourceDomain', 'destinationUsername', 'destinationDomain', 'enabled', 'accepted'];
+    displayedColumns = ['owner', 'sourceUsername', 'sourceDomain', 'destinationUsername', 'destinationDomain', 'enabled', 'accepted', 'actions'];
 
     // Without the trailing comma it doesn't work.
     // noinspection JSConsecutiveCommasInArrayLiteral
@@ -56,11 +56,15 @@ export class AliasesComponent implements OnInit, AfterViewInit {
     }
 
     setEnabled(uuid: string, enabled: boolean) {
-        this.aliasService.setEnabled(uuid, enabled).subscribe()
+        this.aliasService.setEnabled(uuid, enabled).subscribe(_ => this.fetchData());
     }
 
     setAccepted(uuid: string, accepted: boolean) {
-        this.aliasService.setAccepted(uuid, accepted).subscribe()
+        this.aliasService.setAccepted(uuid, accepted).subscribe(_ => this.fetchData());
+    }
+
+    delete(uuid: string) {
+        this.aliasService.delete(uuid).subscribe(_ => this.fetchData());
     }
 
     private fetchData() {

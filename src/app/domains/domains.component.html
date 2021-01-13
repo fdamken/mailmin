@@ -5,6 +5,26 @@
 <div class="nav-content">
     <mat-spinner *ngIf="!isLoaded" [mode]="'indeterminate'"></mat-spinner>
 
+    <form [formGroup]="newDomainForm" (submit)="submitNewDomain()">
+        <table>
+            <tr>
+                <td>
+                    <mat-form-field>
+                        <mat-label>Register new domain</mat-label>
+                        <!--suppress HtmlFormInputWithoutLabel -->
+                        <input type="text" matInput formControlName="domainName" placeholder="Domain">
+                        <mat-error *ngIf="newDomainForm.get('domainName').hasError('required')">
+                            Domain name is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </td>
+                <td>
+                    <button mat-button [disabled]="!newDomainForm.valid" color="primary" type="submit">Register</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+
     <p *ngIf="isLoaded && dataSource.data.length <= 0">No domains found.</p>
 
     <div [hidden]="!(isLoaded && dataSource.data.length > 0)">
@@ -15,9 +35,9 @@
             </ng-container>
 
             <ng-container matColumnDef="actions">
-                <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
-                <mat-cell *matCellDef="let domain">
-                    <button mat-icon-button (click)="delete(domain)" matTooltip="Delete">
+                <mat-header-cell *matHeaderCellDef class="center">Actions</mat-header-cell>
+                <mat-cell *matCellDef="let domain" class="center">
+                    <button mat-icon-button (click)="delete(domain.domain)" matTooltip="Delete">
                         <mat-icon>delete</mat-icon>
                     </button>
                 </mat-cell>
@@ -26,25 +46,5 @@
             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
             <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
         </mat-table>
-
-        <form [formGroup]="newDomainForm" (submit)="submitNewDomain()" class="new-form">
-            <table>
-                <tr>
-                    <td>
-                        <mat-form-field>
-                            <mat-label>Register new domain</mat-label>
-                            <!--suppress HtmlFormInputWithoutLabel -->
-                            <input type="text" matInput formControlName="domainName" placeholder="Domain">
-                            <mat-error *ngIf="newDomainForm.get('domainName').hasError('required')">
-                                Domain name is <strong>required</strong>
-                            </mat-error>
-                        </mat-form-field>
-                    </td>
-                    <td>
-                        <button mat-button [disabled]="!newDomainForm.valid" color="primary" type="submit">Register</button>
-                    </td>
-                </tr>
-            </table>
-        </form>
     </div>
 </div>

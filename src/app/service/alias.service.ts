@@ -17,32 +17,34 @@ export class AliasService {
             sourceDomain: sourceDomain,
             destinationUsername: destUsername,
             destinationDomain: destDomain
-        }).pipe(map(dto => AliasMapper.toModel(dto)))
+        }).pipe(map(dto => AliasMapper.toModel(dto)));
     }
 
     readAll(): Observable<Alias[]> {
-        return this.http.get(CommonConstants.ALIASES_RESOURCE).pipe(
-            map((data: any) => data.map(dto => AliasMapper.toModel(dto)))
-        )
+        return this.http.get(CommonConstants.ALIASES_RESOURCE).pipe(map((data: any) => data.map(dto => AliasMapper.toModel(dto))));
     }
 
-    setEnabled(uuid: string, enabled: boolean) {
+    setEnabled(uuid: string, enabled: boolean): Observable<Alias> {
         let request;
         if (enabled) {
-            request = this.http.post(CommonConstants.ALIASES_RESOURCE + '/' + encodeURIComponent(uuid) + '/enabled', null)
+            request = this.http.post(CommonConstants.ALIASES_RESOURCE + '/' + encodeURIComponent(uuid) + '/enabled', null);
         } else {
-            request = this.http.delete(CommonConstants.ALIASES_RESOURCE + '/' + encodeURIComponent(uuid) + '/enabled')
+            request = this.http.delete(CommonConstants.ALIASES_RESOURCE + '/' + encodeURIComponent(uuid) + '/enabled');
         }
-        return request.pipe(map(dto => AliasMapper.toModel(dto)))
+        return request.pipe(map(dto => AliasMapper.toModel(dto)));
     }
 
-    setAccepted(uuid: string, enabled: boolean) {
+    setAccepted(uuid: string, enabled: boolean): Observable<Alias> {
         let request;
         if (enabled) {
-            request = this.http.post(CommonConstants.ALIASES_RESOURCE + '/' + encodeURIComponent(uuid) + '/accepted', null)
+            request = this.http.post(CommonConstants.ALIASES_RESOURCE + '/' + encodeURIComponent(uuid) + '/accepted', null);
         } else {
-            request = this.http.delete(CommonConstants.ALIASES_RESOURCE + '/' + encodeURIComponent(uuid) + '/accepted')
+            request = this.http.delete(CommonConstants.ALIASES_RESOURCE + '/' + encodeURIComponent(uuid) + '/accepted');
         }
-        return request.pipe(map(dto => AliasMapper.toModel(dto)))
+        return request.pipe(map(dto => AliasMapper.toModel(dto)));
+    }
+
+    delete(uuid: string): Observable<any> {
+        return this.http.delete(CommonConstants.ALIASES_RESOURCE + '/' + encodeURIComponent(uuid));
     }
 }

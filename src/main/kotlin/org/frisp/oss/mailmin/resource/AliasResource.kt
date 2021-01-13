@@ -30,31 +30,38 @@ class AliasResource(
         return aliasService.readFiltered(SecurityUtil.getUserName(), SecurityUtil.isAdmin()).map(aliasMapper::toDTO).toSet()
     }
 
-    @PostMapping("/{uuid}/enabled")
-    @PreAuthorize("@aliasService.isCurrentUserOwner(#uuid) || hasRole('${SecurityConstants.ROLE_ADMIN}')")
+    @PostMapping("/{id}/enabled")
+    @PreAuthorize("@aliasService.isCurrentUserOwner(#id) || hasRole('${SecurityConstants.ROLE_ADMIN}')")
     @ResponseStatus(HttpStatus.CREATED)
-    fun enableAlias(@PathVariable uuid: UUID): AliasDTO {
-        return aliasMapper.toDTO(aliasService.setEnabled(uuid, true))
+    fun enable(@PathVariable id: UUID): AliasDTO {
+        return aliasMapper.toDTO(aliasService.setEnabled(id, true))
     }
 
-    @DeleteMapping("/{uuid}/enabled")
-    @PreAuthorize("@aliasService.isCurrentUserOwner(#uuid) || hasRole('${SecurityConstants.ROLE_ADMIN}')")
+    @DeleteMapping("/{id}/enabled")
+    @PreAuthorize("@aliasService.isCurrentUserOwner(#id) || hasRole('${SecurityConstants.ROLE_ADMIN}')")
     @ResponseStatus(HttpStatus.CREATED)
-    fun disableAlias(@PathVariable uuid: UUID): AliasDTO {
-        return aliasMapper.toDTO(aliasService.setEnabled(uuid, false))
+    fun disable(@PathVariable id: UUID): AliasDTO {
+        return aliasMapper.toDTO(aliasService.setEnabled(id, false))
     }
 
-    @PostMapping("/{uuid}/accepted")
+    @PostMapping("/{id}/accepted")
     @PreAuthorize(SecurityConstants.CHECK_ROLE_ADMIN)
     @ResponseStatus(HttpStatus.CREATED)
-    fun acceptAlias(@PathVariable uuid: UUID): AliasDTO {
-        return aliasMapper.toDTO(aliasService.setAccepted(uuid, true))
+    fun accept(@PathVariable id: UUID): AliasDTO {
+        return aliasMapper.toDTO(aliasService.setAccepted(id, true))
     }
 
-    @DeleteMapping("/{uuid}/accepted")
+    @DeleteMapping("/{id}/accepted")
     @PreAuthorize(SecurityConstants.CHECK_ROLE_ADMIN)
     @ResponseStatus(HttpStatus.CREATED)
-    fun unacceptAlias(@PathVariable uuid: UUID): AliasDTO {
-        return aliasMapper.toDTO(aliasService.setAccepted(uuid, false))
+    fun unaccept(@PathVariable id: UUID): AliasDTO {
+        return aliasMapper.toDTO(aliasService.setAccepted(id, false))
+    }
+
+    @PreAuthorize("@aliasService.isCurrentUserOwner(#id) || hasRole('${SecurityConstants.ROLE_ADMIN}')")
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    fun deleteOne(@PathVariable id: UUID) {
+        return aliasService.deleteOne(id)
     }
 }

@@ -23,7 +23,7 @@ export class DomainService {
         )
     }
 
-    deleteOne(domain: Domain): Observable<any> {
-        return this.http.delete(CommonConstants.DOMAINS_RESOURCE + '/' + encodeURIComponent(domain.domain));
+    deleteOne(domain: string): Observable<any> {
+        return this.http.delete(CommonConstants.DOMAINS_RESOURCE + '/' + encodeURIComponent(domain));
     }
 }

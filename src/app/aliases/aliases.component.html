@@ -5,56 +5,8 @@
 <div class="nav-content">
     <mat-spinner *ngIf="!isLoaded" [mode]="'indeterminate'"></mat-spinner>
 
-    <p *ngIf="isLoaded && dataSource.data.length <= 0">No aliases found.</p>
-
-    <div [hidden]="!(isLoaded && dataSource.data.length > 0)">
-        <mat-table [dataSource]="dataSource" class="mat-elevation-z5" matSort>
-            <ng-container matColumnDef="owner">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Owner</mat-header-cell>
-                <mat-cell *matCellDef="let alias">{{ alias.owner }}</mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="sourceUsername">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Source Username</mat-header-cell>
-                <mat-cell *matCellDef="let alias">{{ alias.sourceUsername }}</mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="sourceDomain">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Source Domain</mat-header-cell>
-                <mat-cell *matCellDef="let alias">{{ alias.sourceDomain }}</mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="destinationUsername">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Dest. Username</mat-header-cell>
-                <mat-cell *matCellDef="let alias">{{ alias.destinationUsername }}</mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="destinationDomain">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Dest. Domain</mat-header-cell>
-                <mat-cell *matCellDef="let alias">{{ alias.destinationDomain }}</mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="enabled">
-                <mat-header-cell *matHeaderCellDef class="center">Enabled</mat-header-cell>
-                <mat-cell *matCellDef="let alias" class="center">
-                    <mat-checkbox [checked]="alias.enabled" (change)="setEnabled(alias.uuid, $event.checked)"></mat-checkbox>
-                </mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="accepted">
-                <mat-header-cell *matHeaderCellDef class="center">Accepted</mat-header-cell>
-                <mat-cell *matCellDef="let alias" class="center">
-                    <mat-checkbox [checked]="alias.accepted" (change)="setAccepted(alias.uuid, $event.checked)"></mat-checkbox>
-                </mat-cell>
-            </ng-container>
-
-            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-            <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
-        </mat-table>
-    </div>
-
     <ng-container *ngIf="domainsLoaded">
-        <form [formGroup]="newAliasForm" (submit)="submitNewAlias()" class="new-form">
+        <form [formGroup]="newAliasForm" (submit)="submitNewAlias()">
             <table>
                 <tr>
                     <td>
@@ -111,4 +63,61 @@
             </table>
         </form>
     </ng-container>
+
+    <p *ngIf="isLoaded && dataSource.data.length <= 0">No aliases found.</p>
+
+    <div [hidden]="!(isLoaded && dataSource.data.length > 0)">
+        <mat-table [dataSource]="dataSource" class="mat-elevation-z5" matSort>
+            <ng-container matColumnDef="owner">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Owner</mat-header-cell>
+                <mat-cell *matCellDef="let alias">{{ alias.owner }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="sourceUsername">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Source Username</mat-header-cell>
+                <mat-cell *matCellDef="let alias">{{ alias.sourceUsername }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="sourceDomain">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Source Domain</mat-header-cell>
+                <mat-cell *matCellDef="let alias">{{ alias.sourceDomain }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="destinationUsername">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Dest. Username</mat-header-cell>
+                <mat-cell *matCellDef="let alias">{{ alias.destinationUsername }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="destinationDomain">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Dest. Domain</mat-header-cell>
+                <mat-cell *matCellDef="let alias">{{ alias.destinationDomain }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="enabled">
+                <mat-header-cell *matHeaderCellDef class="center">Enabled</mat-header-cell>
+                <mat-cell *matCellDef="let alias" class="center">
+                    <mat-checkbox [checked]="alias.enabled" (change)="setEnabled(alias.uuid, $event.checked)"></mat-checkbox>
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="accepted">
+                <mat-header-cell *matHeaderCellDef class="center">Accepted</mat-header-cell>
+                <mat-cell *matCellDef="let alias" class="center">
+                    <mat-checkbox [checked]="alias.accepted" (change)="setAccepted(alias.uuid, $event.checked)"></mat-checkbox>
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+                <mat-header-cell *matHeaderCellDef class="center">Actions</mat-header-cell>
+                <mat-cell *matCellDef="let alias" class="center">
+                    <button mat-icon-button (click)="delete(alias.uuid)" matTooltip="Delete">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+        </mat-table>
+    </div>
 </div>
