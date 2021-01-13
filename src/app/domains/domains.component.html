@@ -5,10 +5,10 @@
 <div class="nav-content">
     <mat-spinner *ngIf="!isLoaded" [mode]="'indeterminate'"></mat-spinner>
 
-    <p *ngIf="isLoaded && domains.length <= 0">No domains found.</p>
+    <p *ngIf="isLoaded && dataSource.data.length <= 0">No domains found.</p>
 
-    <ng-container *ngIf="isLoaded && domains.length > 0">
-        <mat-table [dataSource]="domains" class="mat-elevation-z5">
+    <div [hidden]="!(isLoaded && dataSource.data.length > 0)">
+        <mat-table [dataSource]="dataSource" class="mat-elevation-z5">
             <ng-container matColumnDef="domain">
                 <mat-header-cell *matHeaderCellDef>Domain</mat-header-cell>
                 <mat-cell *matCellDef="let domain">{{ domain.domain }}</mat-cell>
@@ -46,5 +46,5 @@
                 </tr>
             </table>
         </form>
-    </ng-container>
+    </div>
 </div>

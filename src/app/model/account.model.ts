@@ -3,7 +3,7 @@ export class Account {
     username: string;
     domain: string;
     quota: number;
-    enabled: boolean;
     sendonly: boolean;
+    enabled: boolean;
     accepted: boolean;
 }

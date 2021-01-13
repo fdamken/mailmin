@@ -1,0 +1,66 @@
+<mat-toolbar>
+    <h2>Accounts</h2>
+</mat-toolbar>
+
+<div class="nav-content">
+    <mat-spinner *ngIf="!isLoaded" [mode]="'indeterminate'"></mat-spinner>
+
+    <p *ngIf="isLoaded && dataSource.data.length <= 0">No accounts found.</p>
+
+    <div [hidden]="!(isLoaded && dataSource.data.length > 0)">
+        <mat-table [dataSource]="dataSource" class="mat-elevation-z5" matSort>
+            <ng-container matColumnDef="id">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>ID</mat-header-cell>
+                <mat-cell *matCellDef="let account">{{ account.id }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="username">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Username</mat-header-cell>
+                <mat-cell *matCellDef="let account">{{ account.username }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="domain">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Domain</mat-header-cell>
+                <mat-cell *matCellDef="let account">{{ account.domain }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="quota">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Quota</mat-header-cell>
+                <mat-cell *matCellDef="let account">{{ account.quota }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="sendonly">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Send Only</mat-header-cell>
+                <mat-cell *matCellDef="let account">
+                    <mat-icon *ngIf="account.sendonly; else aliasNotAccepted">check_circle</mat-icon>
+                    <ng-template #aliasNotAccepted>
+                        <mat-icon>cancel</mat-icon>
+                    </ng-template>
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="enabled">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Enabled</mat-header-cell>
+                <mat-cell *matCellDef="let account">
+                    <mat-icon *ngIf="account.enabled; else aliasNotAccepted">check_circle</mat-icon>
+                    <ng-template #aliasNotAccepted>
+                        <mat-icon>cancel</mat-icon>
+                    </ng-template>
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="accepted">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Accepted</mat-header-cell>
+                <mat-cell *matCellDef="let account">
+                    <mat-icon *ngIf="account.accepted; else aliasNotAccepted">check_circle</mat-icon>
+                    <ng-template #aliasNotAccepted>
+                        <mat-icon>cancel</mat-icon>
+                    </ng-template>
+                </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+        </mat-table>
+    </div>
+</div>

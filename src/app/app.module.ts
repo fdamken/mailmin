@@ -22,13 +22,16 @@ import {AliasesComponent} from "./aliases/aliases.component";
 import {AliasService} from "./service/alias.service";
 import {MatSortModule} from "@angular/material/sort";
 import {CommonModule} from "@angular/common";
+import {AccountsComponent} from "./accounts/accounts.component";
+import {AccountService} from "./service/account.service";
 
 @NgModule({
     declarations: [
         AppComponent,
         DomainsComponent,
         AliasesComponent,
-        DashboardComponent
+        DashboardComponent,
+        AccountsComponent
     ],
     imports: [
         BrowserModule,
@@ -50,7 +53,7 @@ import {CommonModule} from "@angular/common";
         MatSortModule
     ],
     exports: [MatSortModule],
-    providers: [AliasService, DomainService],
+    providers: [AccountService, AliasService, DomainService],
     bootstrap: [AppComponent]
 })
 export class AppModule {

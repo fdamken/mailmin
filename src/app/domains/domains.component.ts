@@ -2,6 +2,7 @@ import {Component, OnInit} from "@angular/core";
 import {Domain} from "../model/domain.model";
 import {DomainService} from "../service/domain.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {MatTableDataSource} from "@angular/material/table";
 
 @Component({
     selector: 'app-component',
@@ -10,7 +11,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 })
 export class DomainsComponent implements OnInit {
     isLoaded: boolean = false;
-    domains: Domain[] = [];
+    dataSource = new MatTableDataSource<Domain>()
 
     displayedColumns = ['domain', 'actions'];
 
@@ -43,7 +44,7 @@ export class DomainsComponent implements OnInit {
         this.isLoaded = false;
 
         this.domainService.readAll().subscribe(domains => {
-            this.domains = domains;
+            this.dataSource.data = domains;
 
             this.isLoaded = true;
         });
