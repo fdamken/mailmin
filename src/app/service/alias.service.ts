@@ -25,4 +25,24 @@ export class AliasService {
             map((data: any) => data.map(dto => AliasMapper.toModel(dto)))
         )
     }
+
+    setEnabled(uuid: string, enabled: boolean) {
+        let request;
+        if (enabled) {
+            request = this.http.post(CommonConstants.ALIASES_RESOURCE + '/' + encodeURIComponent(uuid) + '/enabled', null)
+        } else {
+            request = this.http.delete(CommonConstants.ALIASES_RESOURCE + '/' + encodeURIComponent(uuid) + '/enabled')
+        }
+        return request.pipe(map(dto => AliasMapper.toModel(dto)))
+    }
+
+    setAccepted(uuid: string, enabled: boolean) {
+        let request;
+        if (enabled) {
+            request = this.http.post(CommonConstants.ALIASES_RESOURCE + '/' + encodeURIComponent(uuid) + '/accepted', null)
+        } else {
+            request = this.http.delete(CommonConstants.ALIASES_RESOURCE + '/' + encodeURIComponent(uuid) + '/accepted')
+        }
+        return request.pipe(map(dto => AliasMapper.toModel(dto)))
+    }
 }

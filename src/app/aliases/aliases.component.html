@@ -37,14 +37,14 @@
             <ng-container matColumnDef="enabled">
                 <mat-header-cell *matHeaderCellDef class="center">Enabled</mat-header-cell>
                 <mat-cell *matCellDef="let alias" class="center">
-                    <mat-checkbox [checked]="alias.enabled"></mat-checkbox>
+                    <mat-checkbox [checked]="alias.enabled" (change)="setEnabled(alias.uuid, $event.checked)"></mat-checkbox>
                 </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="accepted">
                 <mat-header-cell *matHeaderCellDef class="center">Accepted</mat-header-cell>
                 <mat-cell *matCellDef="let alias" class="center">
-                    <mat-checkbox [checked]="alias.accepted"></mat-checkbox>
+                    <mat-checkbox [checked]="alias.accepted" (change)="setAccepted(alias.uuid, $event.checked)"></mat-checkbox>
                 </mat-cell>
             </ng-container>
 

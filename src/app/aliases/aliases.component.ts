@@ -55,6 +55,14 @@ export class AliasesComponent implements OnInit, AfterViewInit {
         });
     }
 
+    setEnabled(uuid: string, enabled: boolean) {
+        this.aliasService.setEnabled(uuid, enabled).subscribe()
+    }
+
+    setAccepted(uuid: string, accepted: boolean) {
+        this.aliasService.setAccepted(uuid, accepted).subscribe()
+    }
+
     private fetchData() {
         this.isLoaded = false;
         this.domainsLoaded = false;

@@ -4,15 +4,16 @@ import org.frisp.oss.mailmin.model.Alias
 import org.frisp.oss.mailmin.repository.AliasRepository
 import org.frisp.oss.mailmin.service.AliasService
 import org.frisp.oss.mailmin.service.DomainService
+import org.frisp.oss.mailmin.util.SecurityUtil
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.*
 
-@Service
+@Service("aliasService")
 class AliasServiceImpl(
         private val aliasRepository: AliasRepository,
         private val domainService: DomainService
-) : AbstractBaseService<Alias, Int>(), AliasService {
+) : AbstractBaseService<Alias, UUID>(), AliasService {
     @Transactional
     override fun create(owner: String, isAdmin: Boolean, sourceUsername: String, sourceDomain: String, destUsername: String, destDomain: String): Alias {
         // Check if the source domain exists.
@@ -28,6 +29,23 @@ class AliasServiceImpl(
             return readAll()
         }
         return getRepository().findByOwner(user).toSet()
+    }
+
+    override fun setEnabled(uuid: UUID, enabled: Boolean): Alias {
+        val alias = readOne(uuid)
+        alias.enabled = enabled
+        return getRepository().save(alias)
+    }
+
+    override fun setAccepted(uuid: UUID, accepted: Boolean): Alias {
+        val alias = readOne(uuid)
+        alias.accepted = accepted
+        return getRepository().save(alias)
+    }
+
+    @Transactional(readOnly = true)
+    override fun isCurrentUserOwner(uuid: UUID): Boolean {
+        return readOne(uuid).owner.equals(SecurityUtil.getUserName(), ignoreCase = true)
     }
 
     override fun getRepository() = aliasRepository
