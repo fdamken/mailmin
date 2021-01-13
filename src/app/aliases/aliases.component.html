@@ -9,11 +9,6 @@
 
     <div [hidden]="!(isLoaded && dataSource.data.length > 0)">
         <mat-table [dataSource]="dataSource" class="mat-elevation-z5" matSort>
-            <ng-container matColumnDef="id">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>ID</mat-header-cell>
-                <mat-cell *matCellDef="let alias">{{ alias.id }}</mat-cell>
-            </ng-container>
-
             <ng-container matColumnDef="owner">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>Owner</mat-header-cell>
                 <mat-cell *matCellDef="let alias">{{ alias.owner }}</mat-cell>
@@ -40,22 +35,16 @@
             </ng-container>
 
             <ng-container matColumnDef="enabled">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Enabled</mat-header-cell>
-                <mat-cell *matCellDef="let alias">
-                    <mat-icon *ngIf="alias.enabled; else aliasNotEnabled">check_circle</mat-icon>
-                    <ng-template #aliasNotEnabled>
-                        <mat-icon>cancel</mat-icon>
-                    </ng-template>
+                <mat-header-cell *matHeaderCellDef class="center">Enabled</mat-header-cell>
+                <mat-cell *matCellDef="let alias" class="center">
+                    <mat-checkbox [checked]="alias.enabled"></mat-checkbox>
                 </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="accepted">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Accepted</mat-header-cell>
-                <mat-cell *matCellDef="let alias">
-                    <mat-icon *ngIf="alias.accepted; else aliasNotAccepted">check_circle</mat-icon>
-                    <ng-template #aliasNotAccepted>
-                        <mat-icon>cancel</mat-icon>
-                    </ng-template>
+                <mat-header-cell *matHeaderCellDef class="center">Accepted</mat-header-cell>
+                <mat-cell *matCellDef="let alias" class="center">
+                    <mat-checkbox [checked]="alias.accepted"></mat-checkbox>
                 </mat-cell>
             </ng-container>
 
@@ -63,4 +52,63 @@
             <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
         </mat-table>
     </div>
+
+    <ng-container *ngIf="domainsLoaded">
+        <form [formGroup]="newAliasForm" (submit)="submitNewAlias()" class="new-form">
+            <table>
+                <tr>
+                    <td>
+                        <mat-form-field>
+                            <!--suppress HtmlFormInputWithoutLabel -->
+                            <input type="text" matInput formControlName="sourceUsername" placeholder="From username">
+                            <mat-error *ngIf="newAliasForm.get('sourceUsername').hasError('required')">
+                                From username is <strong>required</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </td>
+                    <td>
+                        <mat-icon>alternate_email</mat-icon>
+                    </td>
+                    <td>
+                        <mat-form-field>
+                            <mat-label>From domain</mat-label>
+                            <mat-select formControlName="sourceDomain">
+                                <mat-option *ngFor="let domain of domains" [value]="domain.domain">{{ domain.domain }}</mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="newAliasForm.get('sourceDomain').hasError('required')">
+                                From domain is <strong>required</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </td>
+                    <td>
+                        <mat-icon>arrow_forward</mat-icon>
+                    </td>
+                    <td>
+                        <mat-form-field>
+                            <!--suppress HtmlFormInputWithoutLabel -->
+                            <input type="text" matInput formControlName="destUsername" placeholder="To username">
+                            <mat-error *ngIf="newAliasForm.get('destUsername').hasError('required')">
+                                To username is <strong>required</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </td>
+                    <td>
+                        <mat-icon>alternate_email</mat-icon>
+                    </td>
+                    <td>
+                        <mat-form-field>
+                            <!--suppress HtmlFormInputWithoutLabel -->
+                            <input type="text" matInput formControlName="destDomain" placeholder="To domain">
+                            <mat-error *ngIf="newAliasForm.get('destDomain').hasError('required')">
+                                To domain is <strong>required</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </td>
+                    <td>
+                        <button mat-button [disabled]="!newAliasForm.valid" color="primary" type="submit">Add</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </ng-container>
 </div>

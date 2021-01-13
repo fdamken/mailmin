@@ -1,5 +1,5 @@
 export class Account {
-    id: number;
+    uuid: string;
     username: string;
     domain: string;
     quota: number;

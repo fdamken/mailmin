@@ -10,7 +10,7 @@ import {MatTableDataSource} from "@angular/material/table";
     styleUrls: ['./domains.component.css']
 })
 export class DomainsComponent implements OnInit {
-    isLoaded: boolean = false;
+    isLoaded = false;
     dataSource = new MatTableDataSource<Domain>()
 
     displayedColumns = ['domain', 'actions'];
@@ -34,7 +34,7 @@ export class DomainsComponent implements OnInit {
 
     submitNewDomain() {
         this.domainService.create(this.newDomainForm.get('domainName').value)
-            .subscribe((_) => {
+            .subscribe(_ => {
                 this.fetchData();
                 this.newDomainForm.reset();
             })
@@ -45,7 +45,6 @@ export class DomainsComponent implements OnInit {
 
         this.domainService.readAll().subscribe(domains => {
             this.dataSource.data = domains;
-
             this.isLoaded = true;
         });
     }

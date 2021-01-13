@@ -1,9 +1,11 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from "@angular/core";
-import {FormBuilder} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Alias} from "../model/alias.model";
 import {AliasService} from "../service/alias.service";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatSort} from "@angular/material/sort";
+import {Domain} from "../model/domain.model";
+import {DomainService} from "../service/domain.service";
 
 @Component({
     selector: 'app-component',
@@ -11,15 +13,27 @@ import {MatSort} from "@angular/material/sort";
     styleUrls: ['./aliases.component.css']
 })
 export class AliasesComponent implements OnInit, AfterViewInit {
-    isLoaded: boolean = false;
+    isLoaded = false;
     dataSource = new MatTableDataSource<Alias>()
+
+    domainsLoaded = false;
+    domains: Domain[]
 
     @ViewChild(MatSort)
     sort: MatSort;
 
-    displayedColumns = ['id', 'owner', 'sourceUsername', 'sourceDomain', 'destinationUsername', 'destinationDomain', 'enabled', 'accepted'];
+    displayedColumns = ['owner', 'sourceUsername', 'sourceDomain', 'destinationUsername', 'destinationDomain', 'enabled', 'accepted'];
 
-    constructor(private formBuilder: FormBuilder, private aliasService: AliasService) {
+    // Without the trailing comma it doesn't work.
+    // noinspection JSConsecutiveCommasInArrayLiteral
+    newAliasForm: FormGroup = this.formBuilder.group({
+        sourceUsername: [, {validators: [Validators.required], updateOn: 'change'}],
+        sourceDomain: [, {validators: [Validators.required], updateOn: 'change'}],
+        destUsername: [, {validators: [Validators.required], updateOn: 'change'}],
+        destDomain: [, {validators: [Validators.required], updateOn: 'change'}]
+    })
+
+    constructor(private formBuilder: FormBuilder, private aliasService: AliasService, private domainService: DomainService) {
     }
 
     ngOnInit() {
@@ -30,13 +44,28 @@ export class AliasesComponent implements OnInit, AfterViewInit {
         this.dataSource.sort = this.sort;
     }
 
+    submitNewAlias() {
+        const sourceUsername = this.newAliasForm.get('sourceUsername').value;
+        const sourceDomain = this.newAliasForm.get('sourceDomain').value;
+        const destUsername = this.newAliasForm.get('destUsername').value;
+        const destDomain = this.newAliasForm.get('destDomain').value;
+        this.aliasService.create(sourceUsername, sourceDomain, destUsername, destDomain).subscribe(_ => {
+            this.fetchData();
+            this.newAliasForm.reset();
+        });
+    }
+
     private fetchData() {
         this.isLoaded = false;
+        this.domainsLoaded = false;
 
         this.aliasService.readAll().subscribe(aliases => {
             this.dataSource.data = aliases;
-
             this.isLoaded = true;
+        });
+        this.domainService.readAll().subscribe(domains => {
+            this.domains = domains;
+            this.domainsLoaded = true;
         });
     }
 }

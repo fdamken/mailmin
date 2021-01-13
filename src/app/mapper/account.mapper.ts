@@ -3,7 +3,7 @@ import {Account} from "../model/account.model";
 export class AccountMapper {
     static toModel(dto: any): Account {
         return {
-            id: dto.id,
+            uuid: dto.uuid,
             username: dto.username,
             domain: dto.domain.domain,
             quota: dto.quota,

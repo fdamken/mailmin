@@ -12,7 +12,7 @@ class AccountMapper(
 ) {
     fun toDTO(model: Account): AccountDTO {
         return AccountDTO(
-                id = model.id,
+                uuid = model.uuid,
                 username = model.username,
                 domain = domainMapper.toDTO(domainService.readOne(model.domain)),
                 quota = model.quota,

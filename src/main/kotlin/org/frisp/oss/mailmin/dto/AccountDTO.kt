@@ -1,7 +1,9 @@
 package org.frisp.oss.mailmin.dto
 
+import java.util.*
+
 data class AccountDTO(
-        var id: Int,
+        var uuid: UUID,
         var username: String,
         var domain: DomainDTO,
         var quota: Int,

@@ -24,6 +24,8 @@ import {MatSortModule} from "@angular/material/sort";
 import {CommonModule} from "@angular/common";
 import {AccountsComponent} from "./accounts/accounts.component";
 import {AccountService} from "./service/account.service";
+import {MatSelectModule} from "@angular/material/select";
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 @NgModule({
     declarations: [
@@ -50,7 +52,9 @@ import {AccountService} from "./service/account.service";
         FormsModule,
         MatInputModule,
         ReactiveFormsModule,
-        MatSortModule
+        MatSortModule,
+        MatSelectModule,
+        MatCheckboxModule
     ],
     exports: [MatSortModule],
     providers: [AccountService, AliasService, DomainService],

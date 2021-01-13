@@ -3,7 +3,7 @@ import {Alias} from "../model/alias.model";
 export class AliasMapper {
     static toModel(dto: any): Alias {
         return {
-            id: dto.id,
+            uuid: dto.uuid,
             owner: dto.owner,
             sourceUsername: dto.sourceUsername,
             sourceDomain: dto.sourceDomain.domain,

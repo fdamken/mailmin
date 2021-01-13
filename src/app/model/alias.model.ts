@@ -1,5 +1,5 @@
 export class Alias {
-    id: number;
+    uuid: string;
     owner: string;
     sourceUsername: string;
     sourceDomain: string;

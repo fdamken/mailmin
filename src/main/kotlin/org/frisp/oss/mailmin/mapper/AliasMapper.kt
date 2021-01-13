@@ -12,7 +12,7 @@ class AliasMapper(
 ) {
     fun toDTO(model: Alias): AliasDTO {
         return AliasDTO(
-                id = model.id,
+                uuid = model.uuid,
                 owner = model.owner,
                 sourceUsername = model.sourceUsername,
                 sourceDomain = domainMapper.toDTO(domainService.readOne(model.sourceDomain)),

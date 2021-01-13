@@ -1,5 +1,6 @@
 package org.frisp.oss.mailmin.model
 
+import java.util.*
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.Id
@@ -7,8 +8,8 @@ import javax.persistence.Id
 @Entity(name = "aliases")
 data class Alias(
         @Id
-        @Column(name = "id")
-        var id: Int,
+        @Column(name = "uuid")
+        var uuid: UUID,
 
         @Column(name = "owner")
         var owner: String,

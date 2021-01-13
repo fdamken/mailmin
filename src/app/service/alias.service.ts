@@ -11,6 +11,15 @@ export class AliasService {
     constructor(private http: HttpClient) {
     }
 
+    create(sourceUsername, sourceDomain, destUsername, destDomain): Observable<Alias> {
+        return this.http.put(CommonConstants.ALIASES_RESOURCE, {
+            sourceUsername: sourceUsername,
+            sourceDomain: sourceDomain,
+            destinationUsername: destUsername,
+            destinationDomain: destDomain
+        }).pipe(map(dto => AliasMapper.toModel(dto)))
+    }
+
     readAll(): Observable<Alias[]> {
         return this.http.get(CommonConstants.ALIASES_RESOURCE).pipe(
             map((data: any) => data.map(dto => AliasMapper.toModel(dto)))

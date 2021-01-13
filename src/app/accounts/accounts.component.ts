@@ -11,13 +11,13 @@ import {Account} from "../model/account.model";
     styleUrls: ['./accounts.component.css']
 })
 export class AccountsComponent implements OnInit, AfterViewInit {
-    isLoaded: boolean = false;
+    isLoaded = false;
     dataSource = new MatTableDataSource<Account>()
 
     @ViewChild(MatSort)
     sort: MatSort;
 
-    displayedColumns = ['id', 'username', 'domain', 'quota', 'sendonly', 'enabled', 'accepted'];
+    displayedColumns = ['username', 'domain', 'quota', 'sendonly', 'enabled', 'accepted'];
 
     constructor(private formBuilder: FormBuilder, private accountService: AccountService) {
     }
@@ -35,7 +35,6 @@ export class AccountsComponent implements OnInit, AfterViewInit {
 
         this.accountService.readAll().subscribe(aliases => {
             this.dataSource.data = aliases;
-
             this.isLoaded = true;
         });
     }

@@ -9,11 +9,6 @@
 
     <div [hidden]="!(isLoaded && dataSource.data.length > 0)">
         <mat-table [dataSource]="dataSource" class="mat-elevation-z5" matSort>
-            <ng-container matColumnDef="id">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>ID</mat-header-cell>
-                <mat-cell *matCellDef="let account">{{ account.id }}</mat-cell>
-            </ng-container>
-
             <ng-container matColumnDef="username">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>Username</mat-header-cell>
                 <mat-cell *matCellDef="let account">{{ account.username }}</mat-cell>
@@ -30,8 +25,8 @@
             </ng-container>
 
             <ng-container matColumnDef="sendonly">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Send Only</mat-header-cell>
-                <mat-cell *matCellDef="let account">
+                <mat-header-cell *matHeaderCellDef class="center">Send Only</mat-header-cell>
+                <mat-cell *matCellDef="let account" class="center">
                     <mat-icon *ngIf="account.sendonly; else aliasNotAccepted">check_circle</mat-icon>
                     <ng-template #aliasNotAccepted>
                         <mat-icon>cancel</mat-icon>
@@ -40,8 +35,8 @@
             </ng-container>
 
             <ng-container matColumnDef="enabled">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Enabled</mat-header-cell>
-                <mat-cell *matCellDef="let account">
+                <mat-header-cell *matHeaderCellDef class="center">Enabled</mat-header-cell>
+                <mat-cell *matCellDef="let account" class="center">
                     <mat-icon *ngIf="account.enabled; else aliasNotAccepted">check_circle</mat-icon>
                     <ng-template #aliasNotAccepted>
                         <mat-icon>cancel</mat-icon>
@@ -50,8 +45,8 @@
             </ng-container>
 
             <ng-container matColumnDef="accepted">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Accepted</mat-header-cell>
-                <mat-cell *matCellDef="let account">
+                <mat-header-cell *matHeaderCellDef class="center">Accepted</mat-header-cell>
+                <mat-cell *matCellDef="let account" class="center">
                     <mat-icon *ngIf="account.accepted; else aliasNotAccepted">check_circle</mat-icon>
                     <ng-template #aliasNotAccepted>
                         <mat-icon>cancel</mat-icon>
