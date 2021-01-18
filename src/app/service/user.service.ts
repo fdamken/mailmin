@@ -21,7 +21,8 @@ export class UserService {
 
     readAll(): Observable<LdapUser[]> {
         return this.http.get(CommonConstants.USERS_RESOURCE).pipe(
-            map((data: any) => data.map(dto => LdapUserMapper.toModel(dto)))
+            map((data: any) => data.map(dto => LdapUserMapper.toModel(dto))),
+            map((data: LdapUser[]) => data.sort((a, b) => a.uid.localeCompare(b.uid)))
         )
     }
 }

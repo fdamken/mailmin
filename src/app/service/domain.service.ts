@@ -19,7 +19,8 @@ export class DomainService {
 
     readAll(): Observable<Domain[]> {
         return this.http.get(CommonConstants.DOMAINS_RESOURCE).pipe(
-            map((data: any) => data.map(dto => DomainMapper.toModel(dto)))
+            map((data: any) => data.map(dto => DomainMapper.toModel(dto))),
+            map((data: Domain[]) => data.sort((a, b) => a.domain.localeCompare(b.domain)))
         );
     }
 
