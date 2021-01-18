@@ -9,9 +9,12 @@ import {UserService} from "../service/user.service";
 import {LdapUser} from "../model/ldap-user.model";
 import {Domain} from "../model/domain.model";
 import {DomainService} from "../service/domain.service";
+import {MatDialog} from "@angular/material/dialog";
+import {ConfirmationDialogComponent} from "../confirmation-dialog/confirmation-dialog.component";
+import {Util} from "../util/util";
 
 @Component({
-    selector: 'app-component',
+    selector: 'accounts-component',
     templateUrl: './accounts.component.html',
     styleUrls: ['./accounts.component.css']
 })
@@ -38,7 +41,7 @@ export class AccountsComponent implements OnInit, AfterViewInit {
         sendonly: [,]
     });
 
-    constructor(private formBuilder: FormBuilder, private accountService: AccountService, private domainService: DomainService, private userService: UserService) {
+    constructor(private dialog: MatDialog, private formBuilder: FormBuilder, private accountService: AccountService, private domainService: DomainService, private userService: UserService) {
     }
 
     ngOnInit() {
@@ -72,8 +75,17 @@ export class AccountsComponent implements OnInit, AfterViewInit {
         this.accountService.setAccepted(uuid, accepted).subscribe(_ => this.fetchData());
     }
 
-    delete(uuid: string) {
-        this.accountService.delete(uuid).subscribe(() => this.fetchData());
+    delete(account: Account) {
+        const address = Util.escapeHtml(account.username) + '@' + Util.escapeHtml(account.domain);
+        this.dialog.open(ConfirmationDialogComponent, {
+            data: {
+                message: 'Are you sure you want to delete the account <code>' + address + '</code>?'
+            }
+        }).afterClosed().subscribe(result => {
+            if (result) {
+                this.accountService.delete(account.uuid).subscribe(() => this.fetchData());
+            }
+        });
     }
 
     refresh() {

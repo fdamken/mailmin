@@ -5,9 +5,12 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {MatTableDataSource} from "@angular/material/table";
 import {User} from "../model/user.model";
 import {UserService} from "../service/user.service";
+import {ConfirmationDialogComponent} from "../confirmation-dialog/confirmation-dialog.component";
+import {MatDialog} from "@angular/material/dialog";
+import {Util} from "../util/util";
 
 @Component({
-    selector: 'app-component',
+    selector: 'domains-component',
     templateUrl: './domains.component.html',
     styleUrls: ['./domains.component.css']
 })
@@ -25,7 +28,7 @@ export class DomainsComponent implements OnInit {
 
     user: User;
 
-    constructor(private formBuilder: FormBuilder, private domainService: DomainService, private userService: UserService) {
+    constructor(private dialog: MatDialog, private formBuilder: FormBuilder, private domainService: DomainService, private userService: UserService) {
     }
 
     ngOnInit() {
@@ -43,7 +46,15 @@ export class DomainsComponent implements OnInit {
     }
 
     delete(domain: string) {
-        this.domainService.deleteOne(domain).subscribe(() => this.fetchData());
+        this.dialog.open(ConfirmationDialogComponent, {
+            data: {
+                message: 'Are you sure you want to delete the domain <code>' + Util.escapeHtml(domain) + '</code>?'
+            }
+        }).afterClosed().subscribe(result => {
+            if (result) {
+                this.domainService.deleteOne(domain).subscribe(() => this.fetchData());
+            }
+        });
     }
 
     refresh() {

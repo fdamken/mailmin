@@ -28,6 +28,8 @@ import {MatSelectModule} from "@angular/material/select";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {UserService} from "./service/user.service";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
+import {ConfirmationDialogComponent} from "./confirmation-dialog/confirmation-dialog.component";
+import {MatDialogModule} from "@angular/material/dialog";
 
 @NgModule({
     declarations: [
@@ -35,7 +37,8 @@ import {MatSlideToggleModule} from "@angular/material/slide-toggle";
         DomainsComponent,
         AliasesComponent,
         DashboardComponent,
-        AccountsComponent
+        AccountsComponent,
+        ConfirmationDialogComponent
     ],
     imports: [
         BrowserModule,
@@ -57,7 +60,8 @@ import {MatSlideToggleModule} from "@angular/material/slide-toggle";
         MatSortModule,
         MatSelectModule,
         MatCheckboxModule,
-        MatSlideToggleModule
+        MatSlideToggleModule,
+        MatDialogModule
     ],
     exports: [MatSortModule],
     providers: [AccountService, AliasService, DomainService, UserService],

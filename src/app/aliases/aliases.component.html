@@ -123,7 +123,7 @@
             <ng-container matColumnDef="actions">
                 <mat-header-cell *matHeaderCellDef class="center">Actions</mat-header-cell>
                 <mat-cell *matCellDef="let alias" class="center">
-                    <button mat-icon-button *ngIf="user" (click)="delete(alias.uuid)" [disabled]="alias.owner != user.username && !user.admin" matTooltip="Delete">
+                    <button mat-icon-button *ngIf="user" (click)="delete(alias)" [disabled]="alias.owner != user.username && !user.admin" matTooltip="Delete">
                         <mat-icon>delete</mat-icon>
                     </button>
                 </mat-cell>

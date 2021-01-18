@@ -8,9 +8,12 @@ import {Domain} from "../model/domain.model";
 import {DomainService} from "../service/domain.service";
 import {UserService} from "../service/user.service";
 import {User} from "../model/user.model";
+import {ConfirmationDialogComponent} from "../confirmation-dialog/confirmation-dialog.component";
+import {Util} from "../util/util";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
-    selector: 'app-component',
+    selector: 'aliases-component',
     templateUrl: './aliases.component.html',
     styleUrls: ['./aliases.component.css']
 })
@@ -37,7 +40,7 @@ export class AliasesComponent implements OnInit, AfterViewInit {
         destDomain: [, {validators: [Validators.required], updateOn: 'change'}]
     });
 
-    constructor(private formBuilder: FormBuilder, private aliasService: AliasService, private domainService: DomainService, private userService: UserService) {
+    constructor(private formBuilder: FormBuilder, private dialog: MatDialog, private aliasService: AliasService, private domainService: DomainService, private userService: UserService) {
     }
 
     ngOnInit() {
@@ -69,8 +72,18 @@ export class AliasesComponent implements OnInit, AfterViewInit {
         this.aliasService.setAccepted(uuid, accepted).subscribe(_ => this.fetchData());
     }
 
-    delete(uuid: string) {
-        this.aliasService.delete(uuid).subscribe(_ => this.fetchData());
+    delete(alias: Alias) {
+        const sourceAddress = Util.escapeHtml(alias.sourceUsername) + '@' + Util.escapeHtml(alias.sourceDomain);
+        const destAddress = Util.escapeHtml(alias.destinationUsername) + '@' + Util.escapeHtml(alias.destinationDomain);
+        this.dialog.open(ConfirmationDialogComponent, {
+            data: {
+                message: 'Are you sure you want to delete the alias from <code>' + sourceAddress + '</code> to <code>' + destAddress + '</code>?'
+            }
+        }).afterClosed().subscribe(result => {
+            if (result) {
+                this.aliasService.delete(alias.uuid).subscribe(_ => this.fetchData());
+            }
+        });
     }
 
     refresh() {

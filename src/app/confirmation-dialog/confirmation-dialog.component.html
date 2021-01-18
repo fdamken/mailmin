@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>
+    {{ title }}
+</h1>
+<div mat-dialog-content>
+    <span [innerHTML]="message"></span>
+</div>
+<div mat-dialog-actions>
+    <span class="menu-spacer"></span>
+    <button mat-button (click)="onDismiss()" color="primary">{{ textDismiss }}</button>
+    <button mat-button (click)="onConfirm()" color="warn">{{ textConfirm }}</button>
+</div>
