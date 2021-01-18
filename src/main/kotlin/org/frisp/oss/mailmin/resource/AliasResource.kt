@@ -26,7 +26,7 @@ class AliasResource(
     }
 
     @GetMapping
-    fun readAll(): Set<AliasDTO> {
+    fun readFiltered(): Set<AliasDTO> {
         return aliasService.readFiltered(SecurityUtil.getUserName(), SecurityUtil.isAdmin()).map(aliasMapper::toDTO).toSet()
     }
 

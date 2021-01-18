@@ -1,6 +1,6 @@
 package org.frisp.oss.mailmin.service
 
-import org.frisp.oss.mailmin.model.Alias
+import org.frisp.oss.mailmin.database.model.Alias
 import java.util.*
 
 interface AliasService : BaseService<Alias, UUID> {

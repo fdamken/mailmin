@@ -1,7 +1,7 @@
 package org.frisp.oss.mailmin.mapper
 
 import org.frisp.oss.mailmin.dto.AccountDTO
-import org.frisp.oss.mailmin.model.Account
+import org.frisp.oss.mailmin.database.model.Account
 import org.frisp.oss.mailmin.service.DomainService
 import org.springframework.stereotype.Component
 

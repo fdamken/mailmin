@@ -21,7 +21,9 @@ export class AliasService {
     }
 
     readAll(): Observable<Alias[]> {
-        return this.http.get(CommonConstants.ALIASES_RESOURCE).pipe(map((data: any) => data.map(dto => AliasMapper.toModel(dto))));
+        return this.http.get(CommonConstants.ALIASES_RESOURCE).pipe(
+            map((data: any) => data.map(dto => AliasMapper.toModel(dto)))
+        );
     }
 
     setEnabled(uuid: string, enabled: boolean): Observable<Alias> {

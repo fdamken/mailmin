@@ -27,6 +27,7 @@ import {AccountService} from "./service/account.service";
 import {MatSelectModule} from "@angular/material/select";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {UserService} from "./service/user.service";
+import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 
 @NgModule({
     declarations: [
@@ -55,7 +56,8 @@ import {UserService} from "./service/user.service";
         ReactiveFormsModule,
         MatSortModule,
         MatSelectModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        MatSlideToggleModule
     ],
     exports: [MatSortModule],
     providers: [AccountService, AliasService, DomainService, UserService],

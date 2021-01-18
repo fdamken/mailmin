@@ -11,8 +11,9 @@
                 <tr>
                     <td>
                         <mat-form-field>
+                            <mat-label>From username</mat-label>
                             <!--suppress HtmlFormInputWithoutLabel -->
-                            <input type="text" matInput formControlName="sourceUsername" placeholder="From username">
+                            <input type="text" matInput formControlName="sourceUsername" placeholder="email">
                             <mat-error *ngIf="newAliasForm.get('sourceUsername').hasError('required')">
                                 From username is <strong>required</strong>
                             </mat-error>
@@ -37,8 +38,9 @@
                     </td>
                     <td>
                         <mat-form-field>
+                            <mat-label>To username</mat-label>
                             <!--suppress HtmlFormInputWithoutLabel -->
-                            <input type="text" matInput formControlName="destUsername" placeholder="To username">
+                            <input type="text" matInput formControlName="destUsername" placeholder="email">
                             <mat-error *ngIf="newAliasForm.get('destUsername').hasError('required')">
                                 To username is <strong>required</strong>
                             </mat-error>
@@ -49,8 +51,9 @@
                     </td>
                     <td>
                         <mat-form-field>
+                            <mat-label>To domain</mat-label>
                             <!--suppress HtmlFormInputWithoutLabel -->
-                            <input type="text" matInput formControlName="destDomain" placeholder="To domain">
+                            <input type="text" matInput formControlName="destDomain" placeholder="example.org">
                             <mat-error *ngIf="newAliasForm.get('destDomain').hasError('required')">
                                 To domain is <strong>required</strong>
                             </mat-error>

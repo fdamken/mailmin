@@ -1,7 +1,7 @@
 package org.frisp.oss.mailmin.service.impl
 
-import org.frisp.oss.mailmin.model.Alias
-import org.frisp.oss.mailmin.repository.AliasRepository
+import org.frisp.oss.mailmin.database.model.Alias
+import org.frisp.oss.mailmin.database.repository.AliasRepository
 import org.frisp.oss.mailmin.service.AliasService
 import org.frisp.oss.mailmin.service.DomainService
 import org.frisp.oss.mailmin.util.SecurityUtil

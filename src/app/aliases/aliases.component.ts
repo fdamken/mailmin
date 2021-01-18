@@ -35,7 +35,7 @@ export class AliasesComponent implements OnInit, AfterViewInit {
         sourceDomain: [, {validators: [Validators.required], updateOn: 'change'}],
         destUsername: [, {validators: [Validators.required], updateOn: 'change'}],
         destDomain: [, {validators: [Validators.required], updateOn: 'change'}]
-    })
+    });
 
     constructor(private formBuilder: FormBuilder, private aliasService: AliasService, private domainService: DomainService, private userService: UserService) {
     }

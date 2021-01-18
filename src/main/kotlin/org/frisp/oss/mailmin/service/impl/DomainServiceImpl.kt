@@ -1,7 +1,7 @@
 package org.frisp.oss.mailmin.service.impl
 
-import org.frisp.oss.mailmin.model.Domain
-import org.frisp.oss.mailmin.repository.DomainRepository
+import org.frisp.oss.mailmin.database.model.Domain
+import org.frisp.oss.mailmin.database.repository.DomainRepository
 import org.frisp.oss.mailmin.service.DomainService
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional

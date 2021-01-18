@@ -1,4 +1,4 @@
-package org.frisp.oss.mailmin.model
+package org.frisp.oss.mailmin.database.model
 
 import java.util.*
 import javax.persistence.Column

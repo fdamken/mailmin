@@ -14,13 +14,13 @@ export class DomainService {
     create(domain: string): Observable<Domain> {
         return this.http.put(CommonConstants.DOMAINS_RESOURCE, {'domain': domain}).pipe(
             map((dto: any) => DomainMapper.toModel(dto))
-        )
+        );
     }
 
     readAll(): Observable<Domain[]> {
         return this.http.get(CommonConstants.DOMAINS_RESOURCE).pipe(
             map((data: any) => data.map(dto => DomainMapper.toModel(dto)))
-        )
+        );
     }
 
     deleteOne(domain: string): Observable<any> {

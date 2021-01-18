@@ -11,9 +11,20 @@ export class AccountService {
     constructor(private http: HttpClient) {
     }
 
+    create(username: string, domain: string, quota: number, sendonly: boolean): Observable<Account> {
+        return this.http.put(CommonConstants.ACCOUNTS_RESOURCE, {
+            'username': username,
+            'domain': domain,
+            'quota': quota,
+            'sendonly': sendonly
+        }).pipe(
+            map(dto => AccountMapper.toModel(dto))
+        );
+    }
+
     readAll(): Observable<Account[]> {
         return this.http.get(CommonConstants.ACCOUNTS_RESOURCE).pipe(
             map((data: any) => data.map(dto => AccountMapper.toModel(dto)))
-        )
+        );
     }
 }

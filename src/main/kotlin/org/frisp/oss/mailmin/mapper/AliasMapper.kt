@@ -1,7 +1,7 @@
 package org.frisp.oss.mailmin.mapper
 
 import org.frisp.oss.mailmin.dto.AliasDTO
-import org.frisp.oss.mailmin.model.Alias
+import org.frisp.oss.mailmin.database.model.Alias
 import org.frisp.oss.mailmin.service.DomainService
 import org.springframework.stereotype.Component
 

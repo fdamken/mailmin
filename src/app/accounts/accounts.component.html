@@ -5,6 +5,62 @@
 <div class="nav-content">
     <mat-spinner *ngIf="!isLoaded" [mode]="'indeterminate'"></mat-spinner>
 
+    <ng-container *ngIf="formDataLoaded">
+        <form [formGroup]="newAccountForm" (submit)="submitNewAccount()">
+            <table>
+                <tr>
+                    <td>
+                        <mat-form-field>
+                            <mat-label>Username</mat-label>
+                            <mat-select formControlName="username">
+                                <mat-option *ngFor="let user of users" [value]="user.uid">{{ user.uid }}</mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="newAccountForm.get('username').hasError('required')">
+                                Username is <strong>required</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </td>
+                    <td>
+                        <mat-icon>alternate_email</mat-icon>
+                    </td>
+                    <td>
+                        <mat-form-field>
+                            <mat-label>Domain</mat-label>
+                            <mat-select formControlName="domain">
+                                <mat-option *ngFor="let domain of domains" [value]="domain.domain">{{ domain.domain }}</mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="newAccountForm.get('domain').hasError('required')">
+                                Domain is <strong>required</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </td>
+                    <td>
+                        <mat-form-field>
+                            <mat-label>Quota</mat-label>
+                            <!--suppress HtmlFormInputWithoutLabel -->
+                            <input type="number" matInput formControlName="quota" placeholder="1024" min="0">
+                            <span matSuffix>MB</span>
+                            <mat-error *ngIf="newAccountForm.get('quota').hasError('min')">
+                                Quota must <strong>not be negative</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </td>
+                    <td>
+                        <mat-slide-toggle formControlName="sendonly">Send only</mat-slide-toggle>
+                    </td>
+                    <td>
+                        <button mat-button [disabled]="!newAccountForm.valid" color="primary" type="submit">
+                            <span *ngIf="user && user.admin; else requestAlias">Add</span>
+                            <ng-template #requestAlias>
+                                <span>Request</span>
+                            </ng-template>
+                        </button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </ng-container>
+
     <p *ngIf="isLoaded && dataSource.data.length <= 0">No accounts found.</p>
 
     <div [hidden]="!(isLoaded && dataSource.data.length > 0)">
