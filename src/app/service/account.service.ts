@@ -57,4 +57,8 @@ export class AccountService {
         }
         return request.pipe(map(dto => AccountMapper.toModel(dto)));
     }
+
+    delete(uuid: string): Observable<any> {
+        return this.http.delete(CommonConstants.ACCOUNTS_RESOURCE + '/' + encodeURIComponent(uuid));
+    }
 }

@@ -22,7 +22,7 @@ export class AccountsComponent implements OnInit, AfterViewInit {
     @ViewChild(MatSort)
     sort: MatSort;
 
-    displayedColumns = ['username', 'domain', 'quota', 'sendonly', 'enabled', 'accepted'];
+    displayedColumns = ['username', 'domain', 'quota', 'sendonly', 'enabled', 'accepted', 'actions'];
 
     user: User;
     users: LdapUser[];
@@ -70,6 +70,10 @@ export class AccountsComponent implements OnInit, AfterViewInit {
 
     setAccepted(uuid: string, accepted: boolean) {
         this.accountService.setAccepted(uuid, accepted).subscribe(_ => this.fetchData());
+    }
+
+    delete(uuid: string) {
+        this.accountService.delete(uuid).subscribe(() => this.fetchData());
     }
 
     private fetchData() {

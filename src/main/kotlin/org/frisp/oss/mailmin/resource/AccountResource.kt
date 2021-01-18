@@ -70,4 +70,11 @@ class AccountResource(
     fun unaccept(@PathVariable id: UUID): AccountDTO {
         return accountMapper.toDTO(accountService.setAccepted(id, false))
     }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("@accountService.isCurrentUserOwner(#id) || hasRole('${SecurityConstants.ROLE_ADMIN}')")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    fun delete(@PathVariable id: UUID) {
+        accountService.deleteOne(id)
+    }
 }

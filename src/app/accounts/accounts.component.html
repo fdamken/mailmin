@@ -41,7 +41,7 @@
                             </mat-error>
                         </mat-form-field>
                     </td>
-                    <td>
+                    <td class="new-account-field-spacing">
                         <mat-form-field>
                             <mat-label>Quota</mat-label>
                             <!--suppress HtmlFormInputWithoutLabel -->
@@ -52,7 +52,7 @@
                             </mat-error>
                         </mat-form-field>
                     </td>
-                    <td>
+                    <td class="new-account-field-spacing">
                         <mat-slide-toggle formControlName="sendonly">Send only</mat-slide-toggle>
                     </td>
                     <td>
@@ -107,6 +107,15 @@
                 <mat-header-cell *matHeaderCellDef class="center">Accepted</mat-header-cell>
                 <mat-cell *matCellDef="let account" class="center">
                     <mat-checkbox *ngIf="user" [checked]="account.accepted" (change)="setAccepted(account.uuid, $event.checked)" [disabled]="!user.admin"></mat-checkbox>
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+                <mat-header-cell *matHeaderCellDef class="center">Actions</mat-header-cell>
+                <mat-cell *matCellDef="let account" class="center">
+                    <button mat-icon-button *ngIf="user" (click)="delete(account.uuid)" [disabled]="account.username != user.username && !user.admin" matTooltip="Delete">
+                        <mat-icon>delete</mat-icon>
+                    </button>
                 </mat-cell>
             </ng-container>
 
