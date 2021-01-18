@@ -1,7 +1,7 @@
 import {Component, OnInit} from "@angular/core";
 import {Domain} from "../model/domain.model";
 import {DomainService} from "../service/domain.service";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {MatTableDataSource} from "@angular/material/table";
 import {User} from "../model/user.model";
 import {UserService} from "../service/user.service";
@@ -23,22 +23,35 @@ export class DomainsComponent implements OnInit {
     // Without the trailing comma it doesn't work.
     // noinspection JSConsecutiveCommasInArrayLiteral
     newDomainForm: FormGroup = this.formBuilder.group({
-        domainName: [, {validators: [Validators.required], updateOn: 'change'}]
+        domain: [, {validators: [Validators.required], updateOn: 'change'}]
     });
 
     user: User;
 
     constructor(private dialog: MatDialog, private formBuilder: FormBuilder, private domainService: DomainService, private userService: UserService) {
+        this.newDomainForm.setValidators(this.validateCollision.bind(this));
     }
 
     ngOnInit() {
         this.fetchData();
+    }
 
-        this.userService.currentUser().subscribe(user => this.user = user);
+    validateCollision(control: AbstractControl): { [key: string]: any } | null {
+        let domainName = control.get('domain').value;
+        if (!domainName) {
+            return null;
+        }
+        domainName = domainName.trim().toLowerCase();
+        for (let domain of this.dataSource.data) {
+            if (domain.domain == domainName) {
+                return {'collision': true};
+            }
+        }
+        return null;
     }
 
     submitNewDomain() {
-        this.domainService.create(this.newDomainForm.get('domainName').value)
+        this.domainService.create(this.newDomainForm.get('domain').value)
             .subscribe(_ => {
                 this.fetchData();
                 this.newDomainForm.reset();
@@ -69,5 +82,7 @@ export class DomainsComponent implements OnInit {
             this.dataSource.data = domains;
             this.isLoaded = true;
         });
+
+        this.userService.currentUser().subscribe(user => this.user = user);
     }
 }

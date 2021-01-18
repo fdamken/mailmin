@@ -16,14 +16,17 @@
                     <mat-form-field>
                         <mat-label>Domain</mat-label>
                         <!--suppress HtmlFormInputWithoutLabel -->
-                        <input type="text" matInput formControlName="domainName" placeholder="example.org">
-                        <mat-error *ngIf="newDomainForm.get('domainName').hasError('required')">
-                            Domain name is <strong>required</strong>
+                        <input type="text" matInput formControlName="domain" placeholder="example.org">
+                        <mat-error *ngIf="newDomainForm.get('domain').hasError('required')">
+                            Domain is <strong>required</strong>
                         </mat-error>
                     </mat-form-field>
                 </td>
                 <td>
                     <button mat-button [disabled]="!newDomainForm.valid" color="primary" type="submit">Register</button>
+                    <mat-error *ngIf="newDomainForm.hasError('collision')">
+                        Domain is already registered
+                    </mat-error>
                 </td>
             </tr>
         </table>

@@ -66,6 +66,9 @@
                                 <span>Request</span>
                             </ng-template>
                         </button>
+                        <mat-error *ngIf="newAccountForm.hasError('collision')">
+                            Account is already registered
+                        </mat-error>
                     </td>
                 </tr>
             </table>

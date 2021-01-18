@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from "@angular/core";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Alias} from "../model/alias.model";
 import {AliasService} from "../service/alias.service";
 import {MatTableDataSource} from "@angular/material/table";
@@ -41,6 +41,7 @@ export class AliasesComponent implements OnInit, AfterViewInit {
     });
 
     constructor(private formBuilder: FormBuilder, private dialog: MatDialog, private aliasService: AliasService, private domainService: DomainService, private userService: UserService) {
+        this.newAliasForm.setValidators(this.validateCollision.bind(this));
     }
 
     ngOnInit() {
@@ -51,6 +52,26 @@ export class AliasesComponent implements OnInit, AfterViewInit {
 
     ngAfterViewInit() {
         this.dataSource.sort = this.sort;
+    }
+
+    validateCollision(control: AbstractControl): { [key: string]: any } | null {
+        let sourceUsername = control.get('sourceUsername').value;
+        let sourceDomain = control.get('sourceDomain').value;
+        let destUsername = control.get('destUsername').value;
+        let destDomain = control.get('destDomain').value;
+        if (!sourceUsername || !sourceDomain || !destUsername || !destDomain) {
+            return null;
+        }
+        sourceUsername = sourceUsername.trim().toLowerCase();
+        sourceDomain = sourceDomain.trim().toLowerCase();
+        destUsername = destUsername.trim().toLowerCase();
+        destDomain = destDomain.trim().toLowerCase();
+        for (let alias of this.dataSource.data) {
+            if (alias.sourceUsername == sourceUsername && alias.sourceDomain == sourceDomain && alias.destinationUsername == destUsername && alias.destinationDomain == destDomain) {
+                return {'collision': true};
+            }
+        }
+        return null;
     }
 
     submitNewAlias() {

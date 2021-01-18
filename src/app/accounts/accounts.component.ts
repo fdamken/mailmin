@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from "@angular/core";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatSort} from "@angular/material/sort";
 import {AccountService} from "../service/account.service";
@@ -42,6 +42,7 @@ export class AccountsComponent implements OnInit, AfterViewInit {
     });
 
     constructor(private dialog: MatDialog, private formBuilder: FormBuilder, private accountService: AccountService, private domainService: DomainService, private userService: UserService) {
+        this.newAccountForm.setValidators(this.validateCollision.bind(this));
     }
 
     ngOnInit() {
@@ -50,6 +51,22 @@ export class AccountsComponent implements OnInit, AfterViewInit {
 
     ngAfterViewInit() {
         this.dataSource.sort = this.sort;
+    }
+
+    validateCollision(control: AbstractControl): { [key: string]: any } | null {
+        let username = control.get('username').value;
+        let domain = control.get('domain').value;
+        if (!username || !domain) {
+            return null;
+        }
+        username = username.trim().toLowerCase();
+        domain = domain.trim().toLowerCase();
+        for (let account of this.dataSource.data) {
+            if (account.username == username && account.domain == domain) {
+                return {'collision': true};
+            }
+        }
+        return null;
     }
 
     submitNewAccount() {

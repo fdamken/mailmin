@@ -70,6 +70,9 @@
                                 <span>Request</span>
                             </ng-template>
                         </button>
+                        <mat-error *ngIf="newAliasForm.hasError('collision')">
+                            Alias is already registered
+                        </mat-error>
                     </td>
                 </tr>
             </table>
