@@ -5,7 +5,7 @@
 <div class="nav-content">
     <mat-spinner *ngIf="!isLoaded" [mode]="'indeterminate'"></mat-spinner>
 
-    <form [formGroup]="newDomainForm" (submit)="submitNewDomain()">
+    <form *ngIf="user && user.admin" [formGroup]="newDomainForm" (submit)="submitNewDomain()">
         <table>
             <tr>
                 <td>
@@ -37,7 +37,7 @@
             <ng-container matColumnDef="actions">
                 <mat-header-cell *matHeaderCellDef class="center">Actions</mat-header-cell>
                 <mat-cell *matCellDef="let domain" class="center">
-                    <button mat-icon-button (click)="delete(domain.domain)" matTooltip="Delete">
+                    <button mat-icon-button (click)="delete(domain.domain)" [disabled]="user && !user.admin" matTooltip="Delete">
                         <mat-icon>delete</mat-icon>
                     </button>
                 </mat-cell>

@@ -5,7 +5,7 @@
         </button>
         <h1 class="menu-app-name">MailMin</h1>
         <span class="menu-spacer"></span>
-        <span>{{ user.displayName }}</span>
+        <span *ngIf="user">{{ user.displayName }}</span>
         <!-- <a href="/logout" mat-button>Logout</a> -->
     </mat-toolbar>
 

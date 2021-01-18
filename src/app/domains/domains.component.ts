@@ -3,6 +3,8 @@ import {Domain} from "../model/domain.model";
 import {DomainService} from "../service/domain.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {MatTableDataSource} from "@angular/material/table";
+import {User} from "../model/user.model";
+import {UserService} from "../service/user.service";
 
 @Component({
     selector: 'app-component',
@@ -19,13 +21,17 @@ export class DomainsComponent implements OnInit {
     // noinspection JSConsecutiveCommasInArrayLiteral
     newDomainForm: FormGroup = this.formBuilder.group({
         domainName: [, {validators: [Validators.required], updateOn: 'change'}]
-    })
+    });
 
-    constructor(private formBuilder: FormBuilder, private domainService: DomainService) {
+    user: User;
+
+    constructor(private formBuilder: FormBuilder, private domainService: DomainService, private userService: UserService) {
     }
 
     ngOnInit() {
         this.fetchData();
+
+        this.userService.currentUser().subscribe(user => this.user = user);
     }
 
     delete(domain: string) {

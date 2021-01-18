@@ -58,7 +58,7 @@
                     </td>
                     <td>
                         <button mat-button [disabled]="!newAliasForm.valid" color="primary" type="submit">
-                            <span *ngIf="user.admin; else requestAlias">Add</span>
+                            <span *ngIf="user && user.admin; else requestAlias">Add</span>
                             <ng-template #requestAlias>
                                 <span>Request</span>
                             </ng-template>
@@ -102,21 +102,21 @@
                 <mat-header-cell *matHeaderCellDef class="center">Enabled</mat-header-cell>
                 <mat-cell *matCellDef="let alias" class="center">
                     <mat-checkbox [checked]="alias.enabled" (change)="setEnabled(alias.uuid, $event.checked)"
-                                  [disabled]="alias.owner != user.username && !user.admin"></mat-checkbox>
+                                  [disabled]="user && alias.owner != user.username && !user.admin"></mat-checkbox>
                 </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="accepted">
                 <mat-header-cell *matHeaderCellDef class="center">Accepted</mat-header-cell>
                 <mat-cell *matCellDef="let alias" class="center">
-                    <mat-checkbox [checked]="alias.accepted" (change)="setAccepted(alias.uuid, $event.checked)" [disabled]="!user.admin"></mat-checkbox>
+                    <mat-checkbox [checked]="alias.accepted" (change)="setAccepted(alias.uuid, $event.checked)" [disabled]="user && !user.admin"></mat-checkbox>
                 </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="actions">
                 <mat-header-cell *matHeaderCellDef class="center">Actions</mat-header-cell>
                 <mat-cell *matCellDef="let alias" class="center">
-                    <button mat-icon-button (click)="delete(alias.uuid)" [disabled]="alias.owner != user.username && !user.admin" matTooltip="Delete">
+                    <button mat-icon-button (click)="delete(alias.uuid)" [disabled]="user && alias.owner != user.username && !user.admin" matTooltip="Delete">
                         <mat-icon>delete</mat-icon>
                     </button>
                 </mat-cell>

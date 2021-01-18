@@ -16,10 +16,10 @@ import {User} from "../model/user.model";
 })
 export class AliasesComponent implements OnInit, AfterViewInit {
     isLoaded = false;
-    dataSource = new MatTableDataSource<Alias>()
+    dataSource = new MatTableDataSource<Alias>();
 
     domainsLoaded = false;
-    domains: Domain[]
+    domains: Domain[];
 
     @ViewChild(MatSort)
     sort: MatSort;
