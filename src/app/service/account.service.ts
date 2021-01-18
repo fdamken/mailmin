@@ -27,4 +27,34 @@ export class AccountService {
             map((data: any) => data.map(dto => AccountMapper.toModel(dto)))
         );
     }
+
+    setSendonly(uuid: string, sendonly: boolean): Observable<Account> {
+        let request;
+        if (sendonly) {
+            request = this.http.post(CommonConstants.ACCOUNTS_RESOURCE + '/' + encodeURIComponent(uuid) + '/sendonly', null);
+        } else {
+            request = this.http.delete(CommonConstants.ACCOUNTS_RESOURCE + '/' + encodeURIComponent(uuid) + '/sendonly');
+        }
+        return request.pipe(map(dto => AccountMapper.toModel(dto)));
+    }
+
+    setEnabled(uuid: string, enabled: boolean): Observable<Account> {
+        let request;
+        if (enabled) {
+            request = this.http.post(CommonConstants.ACCOUNTS_RESOURCE + '/' + encodeURIComponent(uuid) + '/enabled', null);
+        } else {
+            request = this.http.delete(CommonConstants.ACCOUNTS_RESOURCE + '/' + encodeURIComponent(uuid) + '/enabled');
+        }
+        return request.pipe(map(dto => AccountMapper.toModel(dto)));
+    }
+
+    setAccepted(uuid: string, enabled: boolean): Observable<Account> {
+        let request;
+        if (enabled) {
+            request = this.http.post(CommonConstants.ACCOUNTS_RESOURCE + '/' + encodeURIComponent(uuid) + '/accepted', null);
+        } else {
+            request = this.http.delete(CommonConstants.ACCOUNTS_RESOURCE + '/' + encodeURIComponent(uuid) + '/accepted');
+        }
+        return request.pipe(map(dto => AccountMapper.toModel(dto)));
+    }
 }

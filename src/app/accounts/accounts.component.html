@@ -10,7 +10,7 @@
             <table>
                 <tr>
                     <td>
-                        <mat-form-field>
+                        <mat-form-field *ngIf="user.admin; else useCurrentUsername">
                             <mat-label>Username</mat-label>
                             <mat-select formControlName="username">
                                 <mat-option *ngFor="let user of users" [value]="user.uid">{{ user.uid }}</mat-option>
@@ -19,6 +19,13 @@
                                 Username is <strong>required</strong>
                             </mat-error>
                         </mat-form-field>
+                        <ng-template #useCurrentUsername>
+                            <mat-form-field>
+                                <mat-label>Username</mat-label>
+                                <!--suppress HtmlFormInputWithoutLabel -->
+                                <input type="text" matInput formControlName="username" readonly>
+                            </mat-form-field>
+                        </ng-template>
                     </td>
                     <td>
                         <mat-icon>alternate_email</mat-icon>
@@ -83,30 +90,23 @@
             <ng-container matColumnDef="sendonly">
                 <mat-header-cell *matHeaderCellDef class="center">Send Only</mat-header-cell>
                 <mat-cell *matCellDef="let account" class="center">
-                    <mat-icon *ngIf="account.sendonly; else aliasNotAccepted">check_circle</mat-icon>
-                    <ng-template #aliasNotAccepted>
-                        <mat-icon>cancel</mat-icon>
-                    </ng-template>
+                    <mat-checkbox *ngIf="user" [checked]="account.sendonly" (change)="setSendonly(account.uuid, $event.checked)"
+                                  [disabled]="account.username != user.username && !user.admin"></mat-checkbox>
                 </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="enabled">
                 <mat-header-cell *matHeaderCellDef class="center">Enabled</mat-header-cell>
                 <mat-cell *matCellDef="let account" class="center">
-                    <mat-icon *ngIf="account.enabled; else aliasNotAccepted">check_circle</mat-icon>
-                    <ng-template #aliasNotAccepted>
-                        <mat-icon>cancel</mat-icon>
-                    </ng-template>
+                    <mat-checkbox *ngIf="user" [checked]="account.enabled" (change)="setEnabled(account.uuid, $event.checked)"
+                                  [disabled]="account.username != user.username && !user.admin"></mat-checkbox>
                 </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="accepted">
                 <mat-header-cell *matHeaderCellDef class="center">Accepted</mat-header-cell>
                 <mat-cell *matCellDef="let account" class="center">
-                    <mat-icon *ngIf="account.accepted; else aliasNotAccepted">check_circle</mat-icon>
-                    <ng-template #aliasNotAccepted>
-                        <mat-icon>cancel</mat-icon>
-                    </ng-template>
+                    <mat-checkbox *ngIf="user" [checked]="account.accepted" (change)="setAccepted(account.uuid, $event.checked)" [disabled]="!user.admin"></mat-checkbox>
                 </mat-cell>
             </ng-container>
 

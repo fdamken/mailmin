@@ -60,11 +60,24 @@ export class AccountsComponent implements OnInit, AfterViewInit {
         });
     }
 
+    setSendonly(uuid: string, sendonly: boolean) {
+        this.accountService.setSendonly(uuid, sendonly).subscribe(_ => this.fetchData());
+    }
+
+    setEnabled(uuid: string, enabled: boolean) {
+        this.accountService.setEnabled(uuid, enabled).subscribe(_ => this.fetchData());
+    }
+
+    setAccepted(uuid: string, accepted: boolean) {
+        this.accountService.setAccepted(uuid, accepted).subscribe(_ => this.fetchData());
+    }
+
     private fetchData() {
         this.isLoaded = false;
+        this.formDataLoaded = false;
 
-        this.accountService.readAll().subscribe(aliases => {
-            this.dataSource.data = aliases;
+        this.accountService.readAll().subscribe(accounts => {
+            this.dataSource.data = accounts;
             this.isLoaded = true;
         });
 
@@ -77,6 +90,9 @@ export class AccountsComponent implements OnInit, AfterViewInit {
                         this.users = users;
                         this.formDataLoaded = true;
                     });
+                } else {
+                    this.newAccountForm.get('username').setValue(this.user.username);
+                    this.formDataLoaded = true;
                 }
             });
         });

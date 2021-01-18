@@ -5,7 +5,9 @@ import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken
 import org.keycloak.representations.IDToken
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.stereotype.Component
 
+@Component("securityUtil")
 object SecurityUtil {
     fun getUserName() = getIDToken().preferredUsername
 

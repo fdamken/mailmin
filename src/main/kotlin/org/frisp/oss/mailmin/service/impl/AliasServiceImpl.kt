@@ -31,12 +31,14 @@ class AliasServiceImpl(
         return getRepository().findByOwner(user).toSet()
     }
 
+    @Transactional
     override fun setEnabled(uuid: UUID, enabled: Boolean): Alias {
         val alias = readOne(uuid)
         alias.enabled = enabled
         return getRepository().save(alias)
     }
 
+    @Transactional
     override fun setAccepted(uuid: UUID, accepted: Boolean): Alias {
         val alias = readOne(uuid)
         alias.accepted = accepted
