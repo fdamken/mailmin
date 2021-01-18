@@ -13,10 +13,6 @@ h1.menu-app-name {
     margin-left: 0.5em;
 }
 
-.menu-spacer {
-    flex: 1 1 auto;
-}
-
 .menu-sidenav-container {
     flex: 1;
     height: 100%;

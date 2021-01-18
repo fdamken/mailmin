@@ -76,6 +76,11 @@ export class AccountsComponent implements OnInit, AfterViewInit {
         this.accountService.delete(uuid).subscribe(() => this.fetchData());
     }
 
+    refresh() {
+        this.newAccountForm.reset();
+        this.fetchData();
+    }
+
     private fetchData() {
         this.isLoaded = false;
         this.formDataLoaded = false;

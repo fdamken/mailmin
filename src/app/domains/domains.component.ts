@@ -34,16 +34,21 @@ export class DomainsComponent implements OnInit {
         this.userService.currentUser().subscribe(user => this.user = user);
     }
 
-    delete(domain: string) {
-        this.domainService.deleteOne(domain).subscribe(() => this.fetchData());
-    }
-
     submitNewDomain() {
         this.domainService.create(this.newDomainForm.get('domainName').value)
             .subscribe(_ => {
                 this.fetchData();
                 this.newDomainForm.reset();
             })
+    }
+
+    delete(domain: string) {
+        this.domainService.deleteOne(domain).subscribe(() => this.fetchData());
+    }
+
+    refresh() {
+        this.newDomainForm.reset();
+        this.fetchData();
     }
 
     private fetchData() {

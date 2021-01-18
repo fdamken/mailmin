@@ -73,6 +73,11 @@ export class AliasesComponent implements OnInit, AfterViewInit {
         this.aliasService.delete(uuid).subscribe(_ => this.fetchData());
     }
 
+    refresh() {
+        this.newAliasForm.reset();
+        this.fetchData();
+    }
+
     private fetchData() {
         this.isLoaded = false;
         this.domainsLoaded = false;
